@@ -75,7 +75,7 @@ Jurassic Park - Michael Crichton
 The Time Machine - H.G. Wells
 The War of the Worlds - H.G. Wells
 Frankenstein - Mary Shelley
-                     Handmaid’s Tale - Margaret Atwood
+Handmaid’s Tale - Margaret Atwood
 Oryx and Crake - Margaret Atwood
 The Giver - Lois Lowry
 The Maze Runner - James Dashner
@@ -143,7 +143,7 @@ void borrowBook(unordered_map<string, vector<string>> booksList, unordered_map<s
         cout << "Sorry not such a book or author." << endl;
     }}
 void returnBook(unordered_map<string, vector<string>> booksList, unordered_map<string, bool>& nameList, string nameOfBook){
-    if(nameList.find(nameOfBook) != nameList.end()){
+    if(nameList.find(nameOfBook) != nameList.end()){ // if the book's name is not found in this list (list of book names), then we have to check if it exist in the list of author
         if(nameList[nameOfBook] == true){
             nameList[nameOfBook] = false;
             cout << "You return " + nameOfBook + ", thank you." << endl; 
@@ -152,7 +152,7 @@ void returnBook(unordered_map<string, vector<string>> booksList, unordered_map<s
             cout << "Sorry, this book isn't taken. Are you sure you take it?" << endl;
         }
     }
-    else if(booksList.find(nameOfBook) != booksList.end()){
+    else if(booksList.find(nameOfBook) != booksList.end()){ // if user input exist in the list of author, the system will suggest name of the book from this author
         string name;
         cout << "Please enter wich book do you want to return:" << endl;
         for(int i = 0; i < (booksList[nameOfBook]).size(); i++){
@@ -184,8 +184,8 @@ void bookReport(unordered_map<string, bool> nameList){
 }
 int main()
 {
-    unordered_map<string, vector<string>> booksList;
-    unordered_map<string, bool> nameList;
+    unordered_map<string, vector<string>> booksList; //dictionary of author(string) : nameBook(vector<int>) (we have books more then one from each author, so if user input name of author, the system will suggest name of book of that author to input)
+    unordered_map<string, bool> nameList; //dictonary of nameBook(string) : isTaken(bool) (each book as value has bool(taken or not))
     fillBookList(booksList, nameList);
     string command;
     string name;
