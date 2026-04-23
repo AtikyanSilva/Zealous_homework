@@ -74,10 +74,21 @@ int main(){
     firstSolution(code);
     result.push_back(code);
     findAllSolution(result, code, 0);
+    bool isRight = true;
     set<string> finalResult(result.begin(), result.end());
-    cout << "The possible version is: " + to_string(finalResult.size()) << endl;
+    int count = 0;
     for(string line : finalResult){
+        isRight = true;
         line.erase(remove(line.begin(), line.end(), ' '), line.end());
-        cout << line << endl;
+        for(int i = 0; i < line.length(); i++){
+            if(!isalpha(line[i])){
+                isRight = false;
+            }
+        }
+        if(isRight){
+            count++;
+            cout << line << endl;
+        }
     }
+    cout << "The possible version is: " + to_string(count);
 }
