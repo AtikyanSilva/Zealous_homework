@@ -72,6 +72,10 @@ int main(){
     std::cout << "Please enter the size: ";
     int len;
     std::cin >> len;
+    if(len <= 4){
+        std::cout << "No such a road." << std::endl;
+        return 0;
+    }
     std::vector<std::vector<std::string>> chess(len, std::vector<std::string>(len));
     for(int i = 0; i < len; i++){
         for(int j = 0; j < len; j++){
