@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+#include <string>
+int i[8] = {1, 1, 2, 2, -1, -1, -2, -2};
+int j[8] = {2, -2, 1, -1, 2, -2, 1, -1};
+struct information{
+    int step;
+    int i;
+    int j;
+};
+information possibleVersion(int len, std::vector<std::vector<std::string>>& chess, std::vector<int> cordinate){
+    int step = 0;
+    for(int i1 = 0; i1 < 8; i1++){
+        if(cordinate[0] + i[i1] >= 0 and cordinate[0] + i[i1] < len and cordinate[1] + j[i1] >= 0 and cordinate[1] + j[i1] < len and chess[cordinate[0] + i[i1]][cordinate[1] + j[i1]] == "-"){
+            step++;
+        }
+    }
+    information info;
+    info.step = step;
+    info.i = cordinate[0];
+    info.j = cordinate[1];
+    return info;
+}
+void road(int step, int len, std::vector<std::vector<std::string>>& chess, std::vector<int> cordinate){
+    information minVerison;
+    minVerison.step = 9;
+    information info;
+    info.step = 10;
+    for(int i1 = 0; i1 < 8; i1++){
+        if(cordinate[0] + i[i1] >= 0 and cordinate[0] + i[i1] < len and cordinate[1] + j[i1] >= 0 and cordinate[1] + j[i1] < len and chess[cordinate[0] + i[i1]][cordinate[1] + j[i1]] == "-"){
+            info = possibleVersion(len, chess, {cordinate[0] + i[i1], cordinate[1] + j[i1]});
+            if(info.step < minVerison.step){
+                minVerison = info;
+            }
+        }
+    }
+    if(minVerison.step != 9){
+        cordinate[0] = minVerison.i;
+        cordinate[1] = minVerison.j;
+        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
+        step++;
+        road(step, len, chess, cordinate);
+    }
+    return;
+}
+int main(){
+    std::cout << "Please enter the size: ";
+    int len;
+    std::cin >> len;
+    if(len <= 4){
+        std::cout << "No such a road." << std::endl;
+        return 0;
+    }
+    std::vector<std::vector<std::string>> chess(len, std::vector<std::string>(len));
+    for(int i = 0; i < len; i++){
+        for(int j = 0; j < len; j++){
+            chess[i][j] = '-';
+        }
+    }
+    std::vector<int> cordinate = {0, 0};
+    chess[0][0] = "0"; 
+    road(1, len, chess, cordinate);
+    for(int i = 0; i < len; i++){
+        for(int j = 0; j < len; j++){
+            std::cout << chess[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+}
