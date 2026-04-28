@@ -1,72 +1,19 @@
 #include <iostream>
 #include <vector>
 #include <string>
+int i[8] = {1, 1, 2, 2, -1, -1, -2, -2};
+int j[8] = {2, -2, 1, -1, 2, -2, 1, -1};
 void road(int step, int len, std::vector<std::vector<std::string>>& chess, std::vector<int> cordinate){
-    if(cordinate[0] + 2 < len and cordinate[1] + 1 < len and chess[cordinate[0] + 2][cordinate[1] + 1] == "-"){
-        cordinate[0] += 2;
-        cordinate[1] += 1;
-        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
-        step++;
-        road(step, len, chess, cordinate);
-    }
-    if(cordinate[0] + 2 < len and cordinate[1] - 1 >= 0 and chess[cordinate[0] + 2][cordinate[1] - 1] == "-"){
-        cordinate[0] += 2;
-        cordinate[1] -= 1;
-        chess[cordinate[0]][cordinate[1]] = '+';
-        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
-        step++;
-        road(step, len, chess, cordinate);
-    }
-    if(cordinate[0] - 2 >= 0 and cordinate[1] + 1 < len and chess[cordinate[0] - 2][cordinate[1] + 1] == "-"){
-        cordinate[0] -= 2;
-        cordinate[1] += 1;
-        chess[cordinate[0]][cordinate[1]] = '+';
-        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
-        step++;
-        road(step, len, chess, cordinate);
-    }
-    if(cordinate[0] - 2 >= 0 and cordinate[1] - 1 >= 0 and chess[cordinate[0] - 2][cordinate[1] - 1] == "-"){
-        cordinate[0] -= 2;
-        cordinate[1] -= 1;
-        chess[cordinate[0]][cordinate[1]] = '+';
-        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
-        step++;
-        road(step, len, chess, cordinate);
-    }
-    if(cordinate[0] - 1 >= 0 and cordinate[1] - 2 >= 0 and chess[cordinate[0] - 1][cordinate[1] - 2] == "-"){
-        cordinate[0] -= 1;
-        cordinate[1] -= 2;
-        chess[cordinate[0]][cordinate[1]] = '+';
-        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
-        step++;
-        road(step, len, chess, cordinate);
-    }
-    if(cordinate[0] + 1 < len and cordinate[1] + 2 < len and chess[cordinate[0] + 1][cordinate[1] + 2] == "-"){
-        cordinate[0] += 1;
-        cordinate[1] += 2;
-        chess[cordinate[0]][cordinate[1]] = '+';
-        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
-        step++;
-        road(step, len, chess, cordinate);
-    }
-    if(cordinate[0] + 1 < len and cordinate[1] - 2 >= 0 and chess[cordinate[0] + 1][cordinate[1] - 2] == "-"){
-        cordinate[0] += 1;
-        cordinate[1] -= 2;
-        chess[cordinate[0]][cordinate[1]] = '+';
-        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
-        step++;
-        road(step, len, chess, cordinate);
-    }
-    if(cordinate[0] - 1 >= 0 and cordinate[1] + 2 < len and chess[cordinate[0] - 1][cordinate[1] + 2] == "-"){
-        cordinate[0] -= 1;
-        cordinate[1] += 2;
-        chess[cordinate[0]][cordinate[1]] = '+';
-        chess[cordinate[0]][cordinate[1]] = std::to_string(step);
-        step++;
-        road(step, len, chess, cordinate);
+    for(int i1 = 0; i1 < 8; i1++){
+        if(cordinate[0] + i[i1] >= 0 and cordinate[0] + i[i1] < len and cordinate[1] + j[i1] >= 0 and cordinate[1] + j[i1] < len and chess[cordinate[0] + i[i1]][cordinate[1] + j[i1]] == "-"){
+            cordinate[0] += i[i1];
+            cordinate[1] += j[i1];
+            chess[cordinate[0]][cordinate[1]] = std::to_string(step);
+            step++;
+            road(step, len, chess, cordinate);
+        }
     }
     return;
-    
 }
 int main(){
     std::cout << "Please enter the size: ";
