@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <string>
+#include <algorithm>
+void fillPoints(std::unordered_map<int, std::vector<int>> &points, std::unordered_map<int, int> &connections){
+    std::cout << "If you want to stop input, please enter -1" << std::endl;
+    int n1;
+    int n2;
+    while(true){
+        std::cout << "Please enter the starting point: ";
+        std::cin >> n1;
+        if(n1 == -1) return;
+        std::cout << "Please enter where do you want to go: ";
+        std::cin >> n2;
+        if(n2 == -1) return;
+        points[n1].push_back(n2);
+        connections[n2]++;
+        connections[n1];
+    }
+}
+void sort(std::unordered_map<int, std::vector<int>> &points, std::unordered_map<int, int> &connections, std::vector<int> &currentResult, std::vector<std::vector<int>> &result){
+    bool hasBefore = false;
+    for(auto c : connections){
+        int point = c.first;
+        if(c.second == 0 and std::find(currentResult.begin(), currentResult.end(), point) == currentResult.end()){
+            hasBefore = true;
+            currentResult.push_back(point);
+            for(int p : points[point])
+                connections[p]--;
+            sort(points, connections, currentResult, result);
+            for(int p : points[point])
+                connections[p]++;
+            currentResult.pop_back();
+        }
+    }
+    if(!hasBefore){
+        result.push_back(currentResult);
+    }
+}
+int main(){
+    std::unordered_map<int, std::vector<int>> points;
+    std::unordered_map<int, int> connections;
+    std::vector<int> currentResult;
+    std::vector<std::vector<int>> result;
+    fillPoints(points, connections);
+    sort(points, connections, currentResult, result);
+    for(int i = 0; i < result.size(); i++){
+        for(int j = 0; j < result[i].size(); j++){
+            std::cout << result[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+    return 0;
+}
