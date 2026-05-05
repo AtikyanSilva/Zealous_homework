@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <string>
+void fillPoints(std::unordered_map<int, int> &points){
+    std::cout << "If you want to stop input, please enter -1" << std::endl;
+    int n1;
+    int n2;
+    while(true){
+        std::cout << "Please enter the starting point: ";
+        std::cin >> n1;
+        if(n1 == -1) return;
+        points[n1] = points[n1];
+        std::cout << "Please enter where do you want to go: ";
+        std::cin >> n2;
+        if(n2 == -1) return;
+        points[n2] = points[n1] + 1;
+    }
+}
+void sort(std::unordered_map<int, int> points, std::vector<std::string> &result, int startPoint, std::string res){
+    startPoint++;
+    bool hasBefore = false;
+    for(auto point : points){
+        if(point.second == startPoint){
+            hasBefore = true;
+            sort(points, result, startPoint,
+                 res + std::to_string(point.first) + " ");
+        }
+    }
+    if(!hasBefore){
+        result.push_back(res);
+    }
+}
+int main(){
+    std::unordered_map<int, int> points;
+    std::vector<std::string> result;
+    fillPoints(points);
+    sort(points, result, -1, "");
+    for(int i = 0; i < result.size(); i++){
+        std::cout << result[i] << std::endl;
+    }
+    return 0;
+}
