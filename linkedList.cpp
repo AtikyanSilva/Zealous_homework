@@ -196,6 +196,7 @@ linkedList newList1;
 linkedList newList2;
 void doOperation(linkedList &newList){
     std::cout << "If you want to stop, please enter -1" << std::endl;
+    std::cout << std::endl;
     while(true){
         std::string input;
         int value;
